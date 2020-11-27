@@ -33,15 +33,15 @@ public class ControladorPersona extends ControladorGenerico<Persona> {
     *private String nombre|25 bytes+ ((2bytes)
     *Private String apellido|25 bytes+(2bytes)
     *private String direccion|50 bytes +(2bytes)
-    *private String fechaDeNacimiento|8 bytes + 2(bytes)
+    *private String fechaDeNacimiento|10 bytes + 2(bytes)
     *private String genero|10 bytes+ (2bytes)
     *private String estadoCivil|8 bytes +(2bytes)
-    *total= 140+14=154
+    *total= 140+14=156
      */
     public ControladorPersona() {
         try {
             archivos = new RandomAccessFile("/datos/Persona.dat", "rw");
-            tamanioDeRegistro = 154;
+            tamanioDeRegistro = 156;
             eliminar25bytes = "                         ";
             eliminar10bytes = "          ";
             eliminar4bytes = "    ";
@@ -143,7 +143,7 @@ public class ControladorPersona extends ControladorGenerico<Persona> {
                   archivos.writeUTF(eliminar25bytes);
                   archivos.writeUTF(eliminar25bytes);
                   archivos.writeUTF(eliminar50bytes);
-                  archivos.writeUTF(eliminar8bytes);
+                  archivos.writeUTF(eliminar10bytes);
                   archivos.writeUTF(eliminar10bytes);
                   archivos.writeUTF(eliminar8bytes);
               }

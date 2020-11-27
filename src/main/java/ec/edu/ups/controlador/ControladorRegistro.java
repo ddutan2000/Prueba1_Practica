@@ -152,7 +152,6 @@ public class ControladorRegistro extends ControladorGenerico<Registro> {
             System.out.println("Error escritura y lectura [delete ControladorRegistro]");
             System.out.println(ex);
         }
-
     }
 
 }
