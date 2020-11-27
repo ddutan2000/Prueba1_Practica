@@ -5,7 +5,6 @@
  */
 package ec.edu.ups.modelo;
 
-import java.util.Date;
 
 /**
  *
@@ -13,7 +12,7 @@ import java.util.Date;
  */
 public class Registro {
     private int id;
-    private Date fechaDeMatrimonio;
+    private String fechaDeMatrimonio;
     private int testigo1;
     private int testigo2;
     private String lugarDeCelebracion;
@@ -24,7 +23,7 @@ public class Registro {
     public Registro() {
     }
 
-    public Registro(int id, Date fechaDeMatrimonio, String lugarDeCelebracion) {
+    public Registro(int id, String fechaDeMatrimonio, String lugarDeCelebracion) {
         this.id = id;
         this.fechaDeMatrimonio = fechaDeMatrimonio;
         this.lugarDeCelebracion = lugarDeCelebracion;
@@ -38,11 +37,11 @@ public class Registro {
         this.id = id;
     }
 
-    public Date getFechaDeMatrimonio() {
+    public String getFechaDeMatrimonio() {
         return fechaDeMatrimonio;
     }
 
-    public void setFechaDeMatrimonio(Date fechaDeMatrimonio) {
+    public void setFechaDeMatrimonio(String fechaDeMatrimonio) {
         this.fechaDeMatrimonio = fechaDeMatrimonio;
     }
 

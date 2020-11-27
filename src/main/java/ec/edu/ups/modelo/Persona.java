@@ -13,11 +13,12 @@ import java.util.Objects;
  * @author Dutan2000
  */
 public class Persona {
+    private int id;
     private String cedula;
     private String nombre;
     private String apellido;
     private String direccion;
-    private Date fechaDeNacimiento;
+    private String fechaDeNacimiento;
     private String genero;
     private String estadoCivil; 
     
@@ -25,7 +26,8 @@ public class Persona {
     public Persona() {
     }
 
-    public Persona(String cedula, String nombre, String apellido, String direccion, Date fechaDeNacimiento, String genero, String estadoCivil) {
+    public Persona(int id, String cedula, String nombre, String apellido, String direccion, String fechaDeNacimiento, String genero, String estadoCivil) {
+        this.id = id;
         this.cedula = cedula;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -33,6 +35,15 @@ public class Persona {
         this.fechaDeNacimiento = fechaDeNacimiento;
         this.genero = genero;
         this.estadoCivil = estadoCivil;
+    }
+    
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getDireccion() {
@@ -75,11 +86,11 @@ public class Persona {
         this.apellido = apellido;
     }
 
-    public Date getFechaDeNacimiento() {
+    public String getFechaDeNacimiento() {
         return fechaDeNacimiento;
     }
 
-    public void setFechaDeNacimiento(Date fechaDeNacimiento) {
+    public void setFechaDeNacimiento(String fechaDeNacimiento) {
         this.fechaDeNacimiento = fechaDeNacimiento;
     }
 
