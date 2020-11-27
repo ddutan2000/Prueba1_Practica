@@ -18,6 +18,7 @@ import java.util.logging.Logger;
  */
 public class ControladorUsuario  {
     private RandomAccessFile archivos;
+    private ControladorPersona controladorP;
     private Usuario nuevoUsuario;
     private int tamanioDeArchivo;
     private String eliminar25bytes;
@@ -42,7 +43,8 @@ public class ControladorUsuario  {
 
     public ControladorUsuario() {
         try {
-            archivos = new RandomAccessFile("/datos/Usauarios.dat", "rw");
+            archivos = new RandomAccessFile("datos/Usauarios.dat", "rw");
+            
             tamanioDeArchivo=195;
             eliminar25bytes = "                         ";
             eliminar10bytes = "          ";

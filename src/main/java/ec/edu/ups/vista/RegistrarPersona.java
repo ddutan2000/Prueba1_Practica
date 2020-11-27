@@ -27,12 +27,14 @@ public class RegistrarPersona extends javax.swing.JInternalFrame {
      */
     public RegistrarPersona(ControladorPersona controladorPersona, ControladorUsuario controladorUsuario) {
         initComponents();
+        txtID.setText(String.valueOf(controladorPersona.generarCodigo()));
         controladorP = controladorPersona;
         controladorU = controladorUsuario;
     }
 
     public int cargarSiguienteCodigo() {
         return controladorP.generarCodigo();
+        
     }
 
     public void limpiar() {
@@ -77,7 +79,7 @@ public class RegistrarPersona extends javax.swing.JInternalFrame {
         txtFechaDeNacimiento = new javax.swing.JFormattedTextField();
 
         setClosable(true);
-        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
 
         lblNombre.setText("NOMBRE:");
 
@@ -262,17 +264,18 @@ public class RegistrarPersona extends javax.swing.JInternalFrame {
             }
             direcion = direcion.substring(0, 50);
             String fechaDeNacimiento = txtFechaDeNacimiento.getText();
+            
             String genero = cmbxGenero.getSelectedItem().toString();
             for (int i = genero.length(); i < 10; i++) {
                 genero += " ";
             }
             genero = genero.substring(0, 10);
             String tipo = cmbxEstadoCivil.getSelectedItem().toString();
-            for (int i = tipo.length(); i < 10; i++) {
+            for (int i = tipo.length(); i < 8; i++) {
                 tipo += " ";
             }
-            tipo = tipo.substring(0, 10);
-            if (tipo.equals("JUEZ      ")) {
+            tipo = tipo.substring(0, 8);
+            if (tipo.equals("JUEZ    ")) {
 
                 String correo = txtCorreo.getText();
                 for (int i = correo.length(); i < 25; i++) {
@@ -289,13 +292,13 @@ public class RegistrarPersona extends javax.swing.JInternalFrame {
                 controladorU.registrar(usuario);
                 JOptionPane.showMessageDialog(null, "USUARIO REGISTRADO EXITOSAMENTE");
                 limpiar();
+                txtContrasenia.setEditable(false);
+                txtCorreo.setEditable(false);
             } else {
                 persona = new Persona(codigo, cedula, nombre, apellido, direcion, fechaDeNacimiento, genero, tipo);
                 controladorP.create(persona);
                 JOptionPane.showMessageDialog(null, "PERSONA REGISTRADO EXITOSAMENTE");
                 limpiar();
-                txtContrasenia.setEditable(false);
-                txtCorreo.setEditable(false);
             }
         } else {
             JOptionPane.showMessageDialog(null, "ERROR SE ENCUENTRAN CAMPOS VACIOS");

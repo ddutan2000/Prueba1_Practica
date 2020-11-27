@@ -45,7 +45,7 @@ public class ControladorRegistro extends ControladorGenerico<Registro> {
      */
     public ControladorRegistro() {
         try {
-            archivos = new RandomAccessFile("/datos/Registro.dat", "rw");
+            archivos = new RandomAccessFile("datos/Registro.dat", "rw");
             tamanioDeArchivos = 61;
             eliminar4bytes =0;
             eliminar8bytes = "        ";

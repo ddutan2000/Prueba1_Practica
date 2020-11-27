@@ -26,6 +26,7 @@ public class ControladorPersona extends ControladorGenerico<Persona> {
     private String eliminar50bytes;
     private String eliminar8bytes;
     private String eliminar4bytes;
+    private int codigo;
 
     /*calculo de propiedades
     *private int id|4 bytes
@@ -40,13 +41,14 @@ public class ControladorPersona extends ControladorGenerico<Persona> {
      */
     public ControladorPersona() {
         try {
-            archivos = new RandomAccessFile("/datos/Persona.dat", "rw");
+            archivos = new RandomAccessFile("datos/Persona.dat", "rw");
             tamanioDeRegistro = 156;
             eliminar25bytes = "                         ";
             eliminar10bytes = "          ";
             eliminar4bytes = "    ";
             eliminar8bytes = "        ";
             eliminar50bytes = "                                                  ";
+            codigo=0;
 
         } catch (FileNotFoundException ex) {
             System.out.println("Error escritura y lectura [ControladorPersona]");
@@ -157,8 +159,21 @@ public class ControladorPersona extends ControladorGenerico<Persona> {
         
     }
     
-    
-    
-    
+    public int generarCodigo(){
+       try {
+            codigo=0;
+            int tamanototal=(int)archivos.length();
+            if(archivos.length()>0){
+                    tamanototal-=tamanioDeRegistro;
+                    archivos.seek(tamanototal);
+                    codigo+=archivos.readInt();                
+            }
+        } catch (IOException e) {
+            System.out.println("Error escritura y lectura [CodigoActual controladorPersona]");
+            System.out.println(e);
+        }
+        return codigo+1;
+    }
+
 
 }

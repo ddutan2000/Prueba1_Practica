@@ -43,7 +43,7 @@ public class IniciarSession extends javax.swing.JInternalFrame {
         lblInicioSession = new javax.swing.JLabel();
 
         setClosable(true);
-        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
 
         lblCorreo.setText("CORREO:");
 
