@@ -11,7 +11,7 @@ import java.util.Objects;
  *
  * @author Dutan2000
  */
-public class Usuario {
+public class Usuario extends Persona{
     private String correo;
     private String contrasenia;
 

@@ -5,10 +5,154 @@
  */
 package ec.edu.ups.controlador;
 
+import ec.edu.ups.modelo.Persona;
+import ec.edu.ups.modelo.Registro;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.RandomAccessFile;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Dutan2000
  */
-public class ControladorRegistro {
-    
+public class ControladorRegistro extends ControladorGenerico<Registro> {
+
+    private Registro registro;
+    private RandomAccessFile archivos;
+    private Persona testigo1;
+    private Persona testigo2;
+    private Persona juez;
+    private Persona mujer;
+    private Persona marido;
+    private int tamanioDeArchivos;
+    private int eliminar4bytes;
+    private String eliminar8bytes;
+    private String eliminar25bytes;
+    private ControladorPersona controladorPersona;
+
+    /*tamaño de archivo
+    *private int id| 4 bytes
+    *private String fechaDeMatrimonio| 8 bytes +2 bytes
+    *private int testigo1| 4 bytes
+    *private int testigo2| 4 bytes
+    *private String lugarDeCelebracion| 25 bytes+ 2 bytes
+    *private int juez| 4 bytes
+    *private int marido| 4 bytes
+    *private int mujer|4 bytes
+    *total=61 bytes
+     */
+    public ControladorRegistro() {
+        try {
+            archivos = new RandomAccessFile("/datos/Registro.dat", "rw");
+            tamanioDeArchivos = 61;
+            eliminar4bytes =0;
+            eliminar8bytes = "        ";
+            eliminar25bytes = "                         ";
+
+        } catch (FileNotFoundException ex) {
+            System.out.println("Error escritura y lectura [ControladorRegistro]");
+            System.out.println(ex);
+        }
+    }
+
+    @Override
+    public void create(Registro Objeto) {
+        int salto = 0;
+        try {
+            while (salto < archivos.length()) {
+                archivos.seek(salto);
+                testigo1 = controladorPersona.read(Objeto.getTestigo1());
+                testigo2 = controladorPersona.read(Objeto.getTestigo2());
+                juez = controladorPersona.read(Objeto.getJuez());
+                mujer = controladorPersona.read(Objeto.getMujer());
+                marido = controladorPersona.read(Objeto.getMarido());
+                
+                archivos.writeInt(Objeto.getId());
+                archivos.writeUTF(Objeto.getFechaDeMatrimonio());
+                archivos.writeInt(testigo1.getId());
+                archivos.writeInt(testigo2.getId());
+                archivos.writeUTF(Objeto.getLugarDeCelebracion());
+                archivos.writeInt(juez.getId());
+                archivos.writeInt(marido.getId());
+                archivos.writeInt(mujer.getId());
+                
+                mujer.setEstadoCivil("Casado  ");
+                controladorPersona.update(mujer);
+                marido.setEstadoCivil("Casado  ");
+                controladorPersona.update(marido);
+            }
+
+        } catch (IOException ex) {
+            System.out.println("Error escritura y lectura [create ControladorRegistro]");
+            System.out.println(ex);
+        }
+    }
+
+    @Override
+    public Registro read(int codigo) {
+        int salto = 0;
+        try {
+            while (salto < archivos.length()) {
+                archivos.seek(salto);
+                registro=new Registro();
+                registro.setId(archivos.readInt());
+                registro.setFechaDeMatrimonio(archivos.readUTF());
+                registro.setTestigo1(archivos.readInt());
+                registro.setTestigo2(archivos.readInt());
+                registro.setLugarDeCelebracion(archivos.readUTF());
+                registro.setJuez(archivos.readInt());
+                registro.setMarido(archivos.readInt());
+                registro.setMujer(archivos.readInt());
+                if(registro.getId()==codigo){
+                    return registro;
+                }
+            }
+            salto+=tamanioDeArchivos;
+
+        } catch (IOException ex) {
+            System.out.println("Error escritura y lectura [read ControladorRegistro]");
+            System.out.println(ex);
+        }
+        return null;
+    }
+
+    @Override
+    public void delete(Registro Objeto) {
+        int salto = 0;
+        try {
+            while(salto<archivos.length()){
+              archivos.seek(salto); 
+              //testigo1 = controladorPersona.read(Objeto.getTestigo1());
+              //testigo2 = controladorPersona.read(Objeto.getTestigo2());
+              //juez = controladorPersona.read(Objeto.getJuez());
+              mujer = controladorPersona.read(Objeto.getMujer());
+              marido = controladorPersona.read(Objeto.getMarido());
+              registro.setId(archivos.readInt());
+              if(registro.getId()==Objeto.getId()){
+                  archivos.writeInt(eliminar4bytes);
+                  archivos.writeUTF(eliminar8bytes);
+                  archivos.writeInt(eliminar4bytes);
+                  archivos.writeInt(eliminar4bytes);
+                  archivos.writeUTF(eliminar25bytes);
+                  archivos.writeInt(eliminar4bytes);
+                  archivos.writeInt(eliminar4bytes);
+                  archivos.writeInt(eliminar4bytes);
+                  
+                  mujer.setEstadoCivil("Soltero ");
+                  marido.setEstadoCivil("Soltero ");
+                  controladorPersona.update(mujer);
+                  controladorPersona.update(marido);
+              }
+            }
+            salto+=tamanioDeArchivos;
+            
+        } catch (IOException ex) {
+            System.out.println("Error escritura y lectura [delete ControladorRegistro]");
+            System.out.println(ex);
+        }
+
+    }
+
 }
