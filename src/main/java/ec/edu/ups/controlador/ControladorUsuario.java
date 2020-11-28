@@ -9,6 +9,10 @@ import ec.edu.ups.modelo.Usuario;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -82,7 +86,7 @@ public class ControladorUsuario  {
     }
     
     public Usuario login(String correo, String contrasenia){
-        int salto=156;
+        /*int salto=156;
         try {
             while(salto<archivos.length()){
               archivos.seek(salto);
@@ -99,7 +103,30 @@ public class ControladorUsuario  {
             System.out.println(ex);
             
         }
+        return null;*/
+                for (Object object : FindAll()) {
+            Method[] metodos = object.getClass().getMethods();
+            for(Method m: metodos){
+                if (m.getName().equals("getCorreo")){
+                    try {
+                        if(m.invoke(object, null).equals(correo)){
+                            for (Method m1 : metodos) {
+                                if(m1.getName().equals("getContrasenia")){
+                                    if(m1.invoke(object, null).equals(contrasenia)){
+                                        usuario=(Usuario)object;
+                                        return (Usuario)object;
+                                    }       
+                                }
+                            }
+                        }
+                    } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
+                        Logger.getLogger(ControladorUsuario.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        }
         return null;
+        
     }
     
     public int generarcodigo(){
@@ -135,5 +162,32 @@ public class ControladorUsuario  {
         return null;
     }
     
+    public List<Usuario> FindAll(){
+        List <Usuario> usuarios=new ArrayList<>();
+        int salto=0;
+        try {
+            while(salto<archivos.length()){
+                archivos.seek(salto);
+                usuario=new Usuario();
+                usuario.setId(archivos.readInt());
+                usuario.setCedula(archivos.readUTF());
+                usuario.setNombre(archivos.readUTF());
+                usuario.setApellido(archivos.readUTF());
+                usuario.setDireccion(archivos.readUTF());
+                usuario.setFechaDeNacimiento(archivos.readUTF());
+                usuario.setGenero(archivos.readUTF());
+                usuario.setEstadoCivil(archivos.readUTF());
+                usuario.setCorreo(archivos.readUTF());
+                usuario.setContrasenia(archivos.readUTF());
+                usuarios.add(usuario);
+                salto+=tamanioDeArchivo;
+            }
+            return usuarios;
+        } catch (IOException e) {
+            System.out.println("Error escritura y lectura [findAllregistros ControladorRegistros]");
+            System.out.println(e);
+        }
+        return null;
+    }
     
 }
