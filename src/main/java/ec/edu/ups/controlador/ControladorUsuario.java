@@ -44,7 +44,6 @@ public class ControladorUsuario  {
     public ControladorUsuario() {
         try {
             archivos = new RandomAccessFile("datos/Usauarios.dat", "rw");
-            
             tamanioDeArchivo=195;
             eliminar25bytes = "                         ";
             eliminar10bytes = "          ";
@@ -86,6 +85,7 @@ public class ControladorUsuario  {
         try {
             while(salto<archivos.length()){
               archivos.seek(salto);
+              nuevoUsuario=new Usuario();
               nuevoUsuario.setCorreo(archivos.readUTF());
               nuevoUsuario.setContrasenia(archivos.readUTF());
               if(nuevoUsuario.getCorreo().equals(correo)&&nuevoUsuario.getContrasenia().equals(contrasenia)){

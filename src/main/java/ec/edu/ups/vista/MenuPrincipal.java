@@ -137,6 +137,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         openMenuItem.setMnemonic('o');
         openMenuItem.setText("REGISTRO CIVIL");
+        openMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                openMenuItemActionPerformed(evt);
+            }
+        });
         menuTab.add(openMenuItem);
 
         menuBar.add(menuTab);
@@ -179,6 +184,10 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private void tabRegistrarPersonasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tabRegistrarPersonasActionPerformed
     registrarPersona.setVisible(true);
     }//GEN-LAST:event_tabRegistrarPersonasActionPerformed
+
+    private void openMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openMenuItemActionPerformed
+        registroCivil.setVisible(true);
+    }//GEN-LAST:event_openMenuItemActionPerformed
 
     /**
      * @param args the command line arguments

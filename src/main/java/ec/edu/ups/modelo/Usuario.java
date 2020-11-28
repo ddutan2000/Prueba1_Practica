@@ -15,12 +15,18 @@ public class Usuario extends Persona{
     private String correo;
     private String contrasenia;
 
+    public Usuario(String correo, String contrasenia) {
+        this.correo = correo;
+        this.contrasenia = contrasenia;
+    }
+
     public Usuario(String correo, String contrasenia, int id, String cedula, String nombre, String apellido, String direccion, String fechaDeNacimiento, String genero, String estadoCivil) {
         super(id, cedula, nombre, apellido, direccion, fechaDeNacimiento, genero, estadoCivil);
         this.correo = correo;
         this.contrasenia = contrasenia;
     }
-
+    
+    
     
 
     public Usuario() {
