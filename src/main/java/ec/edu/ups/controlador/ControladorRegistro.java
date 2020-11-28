@@ -28,28 +28,30 @@ public class ControladorRegistro extends ControladorGenerico<Registro> {
     private Persona marido;
     private int tamanioDeArchivos;
     private int eliminar4bytes;
-    private String eliminar8bytes;
+    private String eliminar10bytes;
     private String eliminar25bytes;
     private ControladorPersona controladorPersona;
+    private int codigo;
 
     /*tamaño de archivo
     *private int id| 4 bytes
-    *private String fechaDeMatrimonio| 8 bytes +2 bytes
+    *private String fechaDeMatrimonio| 10 bytes +2 bytes
     *private int testigo1| 4 bytes
     *private int testigo2| 4 bytes
     *private String lugarDeCelebracion| 25 bytes+ 2 bytes
     *private int juez| 4 bytes
     *private int marido| 4 bytes
     *private int mujer|4 bytes
-    *total=61 bytes
+    *total=63 bytes
      */
     public ControladorRegistro() {
         try {
             archivos = new RandomAccessFile("datos/Registro.dat", "rw");
-            tamanioDeArchivos = 61;
+            tamanioDeArchivos = 63;
             eliminar4bytes =0;
-            eliminar8bytes = "        ";
+            eliminar10bytes = "          ";
             eliminar25bytes = "                         ";
+            codigo=0;
 
         } catch (FileNotFoundException ex) {
             System.out.println("Error escritura y lectura [ControladorRegistro]");
@@ -132,7 +134,7 @@ public class ControladorRegistro extends ControladorGenerico<Registro> {
               registro.setId(archivos.readInt());
               if(registro.getId()==Objeto.getId()){
                   archivos.writeInt(eliminar4bytes);
-                  archivos.writeUTF(eliminar8bytes);
+                  archivos.writeUTF(eliminar10bytes);
                   archivos.writeInt(eliminar4bytes);
                   archivos.writeInt(eliminar4bytes);
                   archivos.writeUTF(eliminar25bytes);
@@ -153,5 +155,22 @@ public class ControladorRegistro extends ControladorGenerico<Registro> {
             System.out.println(ex);
         }
     }
+    
+    public int generacodigo(){
+        try{
+        codigo=0;
+            int tamanototal=(int)archivos.length();
+            if(archivos.length()>0){
+                    tamanototal-=tamanioDeArchivos;
+                    archivos.seek(tamanototal);
+                    codigo+=archivos.readInt();                
+            }
+        } catch (IOException e) {
+            System.out.println("Error escritura y lectura [CodigoActual controladorPersona]");
+            System.out.println(e);
+        }
+        return codigo+1;
+    }
+
 
 }

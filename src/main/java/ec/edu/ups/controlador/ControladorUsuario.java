@@ -77,6 +77,10 @@ public class ControladorUsuario  {
         }
     }
     
+    public Usuario verUsuario(){
+        return nuevoUsuario;
+    }
+    
     public Usuario login(String correo, String contrasenia){
         int salto=156;
         try {
@@ -95,6 +99,10 @@ public class ControladorUsuario  {
             
         }
         return null;
+    }
+    
+    public int generarcodigo(){
+        return controladorP.generarCodigo();
     }
     
     

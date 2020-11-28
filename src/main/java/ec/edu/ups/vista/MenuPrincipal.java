@@ -39,7 +39,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         iniciarSession = new IniciarSession(this, controladorUsuario);
         listarDatos = new ListarDatos(controladorRegistro);
         registrarPersona = new RegistrarPersona(controladorPersona, controladorUsuario);
-        registroCivil = new RegistroCivil(controladorRegistro);
+        registroCivil = new RegistroCivil(controladorRegistro, controladorPersona, controladorUsuario);
 
         desktopPane.add(iniciarSession);
         desktopPane.add(listarDatos);

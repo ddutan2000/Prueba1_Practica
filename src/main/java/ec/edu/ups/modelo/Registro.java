@@ -23,10 +23,15 @@ public class Registro {
     public Registro() {
     }
 
-    public Registro(int id, String fechaDeMatrimonio, String lugarDeCelebracion) {
+    public Registro(int id, String fechaDeMatrimonio, int testigo1, int testigo2, String lugarDeCelebracion, int juez, int marido, int mujer) {
         this.id = id;
         this.fechaDeMatrimonio = fechaDeMatrimonio;
+        this.testigo1 = testigo1;
+        this.testigo2 = testigo2;
         this.lugarDeCelebracion = lugarDeCelebracion;
+        this.juez = juez;
+        this.marido = marido;
+        this.mujer = mujer;
     }
 
     public int getId() {
@@ -92,6 +97,8 @@ public class Registro {
     public void setMujer(int mujer) {
         this.mujer = mujer;
     }
+
+
     
     
     @Override
