@@ -26,6 +26,7 @@ public class ControladorUsuario  {
     private String eliminar50bytes;
     private String eliminar8bytes;
     private String eliminar4bytes;
+    private Usuario usuario;
     
     /*
     *private int id|4 bytes
@@ -103,6 +104,35 @@ public class ControladorUsuario  {
     
     public int generarcodigo(){
         return controladorP.generarCodigo();
+    }
+    
+    public Usuario buscarUsuario(int codigo){
+        int salto = 0;
+        try {
+            while (salto < archivos.length()) {
+                archivos.seek(salto);
+                usuario=new Usuario();
+                usuario.setId(archivos.readInt());
+                usuario.setCedula(archivos.readUTF());
+                usuario.setNombre(archivos.readUTF());
+                usuario.setApellido(archivos.readUTF());
+                usuario.setDireccion(archivos.readUTF());
+                usuario.setFechaDeNacimiento(archivos.readUTF());
+                usuario.setGenero(archivos.readUTF());
+                usuario.setEstadoCivil(archivos.readUTF());
+                usuario.setCorreo(archivos.readUTF());
+                usuario.setContrasenia(archivos.readUTF());
+                if(codigo==usuario.getId()){
+                    return usuario;
+                }
+                salto+=tamanioDeArchivo;
+                
+            }
+        } catch (IOException ex) {
+            System.out.println("Error escritura y lectura [read Controladorusuario]");
+            System.out.println(ex);
+        }
+        return null;
     }
     
     

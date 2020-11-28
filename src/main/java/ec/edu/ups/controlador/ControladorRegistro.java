@@ -10,6 +10,8 @@ import ec.edu.ups.modelo.Registro;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -170,6 +172,32 @@ public class ControladorRegistro extends ControladorGenerico<Registro> {
             System.out.println(e);
         }
         return codigo+1;
+    }
+    
+    public List<Registro> findAllRegistros() {
+        List <Registro> facturasA=new ArrayList<>();
+        int salto=0;
+        try {
+            while(salto<archivos.length()){
+                archivos.seek(salto);
+                registro=new Registro();
+                registro.setId(archivos.readInt());
+                registro.setFechaDeMatrimonio(archivos.readUTF());
+                registro.setTestigo1(archivos.readInt());
+                registro.setTestigo2(archivos.readInt());
+                registro.setLugarDeCelebracion(archivos.readUTF());
+                registro.setJuez(archivos.readInt());
+                registro.setMarido(archivos.readInt());
+                registro.setMujer(archivos.readInt());
+                facturasA.add(registro);
+                salto+=tamanioDeArchivos;
+            }
+            return facturasA;
+        } catch (IOException e) {
+            System.out.println("Error escritura y lectura [findAllregistros ControladorRegistros]");
+            System.out.println(e);
+        }
+        return null;
     }
 
 
